@@ -1,0 +1,14 @@
+```{block type='col-6 grid-item', echo=TRUE}
+## Contact information {.box}
+<div class="info-box">
+
+| Center | Left |
+|:------:|:-----|
+| <i class="fas fa-map-marker-alt"></i>|Department of Sociology,\
+University of Washington, Seattle, WA|
+| <i class="fas fa-envelope"></i> | clanfear\@uw.edu |
+| <i class="fas fa-globe"></i> | [clanfear.github.io](https://clanfear.github.io) |
+| <i class="fab fa-github"></i> | [clanfear](https://github.com/clanfear/) |
+
+</div>
+```
