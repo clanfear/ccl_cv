@@ -83,7 +83,7 @@ cv_entries %>%
   kable()
 ```
 
-### Poster presentations {.nohead .posters}
+### Posters {.nohead .posters}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'poster') %>%
@@ -137,7 +137,7 @@ cv_entries %>%
 ```
 
 ## Other {.tabset .output-header}
-### Grants and Awards {.nohead .grants}
+### Grants and awards {.nohead .grants}
 ```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
@@ -177,8 +177,8 @@ cv_entries %>%
 cv_entries %>% 
   filter(type == 'work') %>% 
   mutate(what = ifelse(!is.na(additional_info), 
-    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
-    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
+    str_c(what, "<br>", where, "<br>", additional_info),
+    str_c(what, "<br>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
