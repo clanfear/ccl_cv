@@ -9,6 +9,7 @@ University of Washington, Seattle, WA|
 | <i class="fas fa-envelope"></i> | clanfear\@uw.edu |
 | <i class="fas fa-globe"></i> | [clanfear.github.io](https://clanfear.github.io) |
 | <i class="fab fa-github"></i> | [clanfear](https://github.com/clanfear/) |
+| <i class="fab fa-twitter"></i> | [\@cclanfear](https://twitter.com/cclanfear) |
 
 </div>
 ```
