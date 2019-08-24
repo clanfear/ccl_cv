@@ -172,6 +172,14 @@ cv_entries %>%
   kable()
 ```
 
+### Reviews {.nohead .service}
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'reviewer') %>%
+  select(what) %>% 
+  kable()
+```
+
 ### Selected work experience {.nohead .work}
 ```{r, eval= TRUE}
 cv_entries %>% 
