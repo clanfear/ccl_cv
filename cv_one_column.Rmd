@@ -167,7 +167,14 @@ cv_entries %>%
   mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = str_c(what, ", ", where)) %>%
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end))) %>% 
+  mutate(year = case_when( 
+           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, " --- ", year_end),
+           is.na(year_end) & !is.na(year_begin) ~ year_begin,
+           !is.na(year_end) & is.na(year_begin) ~ year_end,
+           TRUE ~ "ERROR"
+           )) %>% 
+  mutate(year_begin = ifelse(is.na(year_begin), year_end, year_begin)) %>%
+  arrange(desc(year_begin)) %>%
   select(year, what) %>% 
   kable()
 ```
