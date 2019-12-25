@@ -95,7 +95,7 @@ cv_entries %>%
 ```
 
 ## Teaching {.tabset .output-header}
-### Courses {.nohead .courses}
+### Courses (Instructor) {.nohead .courses}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'teaching') %>% 
@@ -133,6 +133,20 @@ cv_entries %>%
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
+  kable()
+```
+
+### Courses (TA) {.nohead .courses}
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'teaching_ta') %>% 
+  arrange(desc(year_end)) %>%
+  mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
+  mutate(what = ifelse(!is.na(additional_info), 
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  select(year, what) %>% 
   kable()
 ```
 
@@ -191,6 +205,7 @@ cv_entries %>%
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'work') %>% 
+  arrange(desc(str_sub(year_end, -4, -1))) %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c(what, "<br>", where, "<br>", additional_info),
     str_c(what, "<br>", where))) %>% 
