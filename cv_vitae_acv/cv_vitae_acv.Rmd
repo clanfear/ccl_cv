@@ -1,0 +1,221 @@
+---
+name: Charles C.
+surname: Lanfear
+address: "Department of Sociology, University of Washington"
+www: clanfear.github.io
+email: "clanfear@uw.edu"
+twitter: cclanfear
+date: "`r format(Sys.time(), '%B %Y')`"
+headcolor: 414141
+output: vitae::moderncv
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+library(dplyr)
+library(stringr)
+library(knitr)
+
+publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
+
+cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
+```
+
+# Education
+
+```{r}
+cv_entries %>%
+  filter(type == "education") %>%
+# tribble(
+#   ~ Degree, ~ Year, ~ Institution, ~ Where,
+#   "Informal studies", "", "Flying University", "Warsaw, Poland",
+#   "Master of Physics", "1893", "Sorbonne Université", "Paris, France",
+#   "Master of Mathematics", "1894", "Sorbonne Université", "Paris, France"
+# ) %>% 
+  mutate(count = ifelse(what %in% c("PhD in Sociology", "Master of Arts in Sociology"), 2, 1)) %>%
+  tidyr::uncount(count) %>%
+#     what == "Master of Arts in Sociology" ~ "Thesis: Disorder in the Neighborhood: A Large-Scale Field Experiment on
+# Disorder, Norm Violation, and Pro-Social Behavior",
+#     what == "Master of Public Policy" ~ "Exploring a Mental Health Crisis",
+#    TRUE ~ NA_character_)) %>%
+  group_by(what) %>%
+  arrange(desc(year_begin)) %>% 
+  mutate(rownum = row_number()) %>%
+  mutate(detail = case_when(
+    what == "PhD in Sociology" & rownum==2 ~ "Committee: Ross Matsueda (chair), Kyle Crowder, Jerald Herting", 
+    what == "PhD in Sociology" & rownum==1 ~ "Dissertation: Collective Efficacy and the Social Control System",
+    what == "Master of Arts in Sociology" & rownum==1 ~ "Thesis: Disorder in the Neighborhood",
+    what == "Master of Arts in Sociology" & rownum==2 ~ "Recipient: University of Washington Distinguished Master's Thesis Award",
+    what == "Master of Public Policy" & rownum==1 ~ "Concentration: Law, Crime, and Policy",
+    TRUE ~ NA_character_)) %>%
+  # mutate(what = str_c(what, ", ", where)) %>%
+  detailed_entries(what, year_begin, NA, where=where, why=detail) 
+```
+
+# Publications
+
+```{r, eval = TRUE, warning=FALSE, message=FALSE}
+gscholar_bib <- scholar::get_publications("DAFuktIAAAAJ") %>% 
+  filter(journal != "") %>%
+  arrange(desc(year), title) %>%
+  distinct(title, .keep_all = TRUE)
+
+stupid_quotes <- gscholar_bib %>%
+  filter(str_detect(title, "Frequent Fliers")) %>%
+  pull(title) %>%
+  (function(x){str_c("(", str_sub(x,29,29),"|", str_sub(x,45,45),")")})
+
+articles <- gscholar_bib %>%
+    mutate(title = str_replace_all(title, stupid_quotes, "'")) %>%
+    transmute(bibtype = "Article", author = as.character(author),
+            title = as.character(title),
+            journaltitle = as.character(journal), year, key = row_number(),
+            volume = str_extract(number, "^[0-9]+"),
+            pages = str_replace_all(str_trim(str_extract(number, " [0-9]+[\\D][0-9]+$")), "\\D", "-"),
+            number = str_replace_all(str_extract(number, "\\([0-9]+\\)"), "\\(|\\)", "")) %>%
+  mutate(number = ifelse(str_detect(journaltitle, "offender therapy"), "5", number),
+         pages = ifelse(str_detect(journaltitle, "offender therapy"), "508-525", pages)) %>%
+  mutate(journaltitle = str_replace(journaltitle, "&", "\\\\&"))
+
+reports <- publications %>%
+  filter(type == "report") %>%
+    transmute(bibtype = "Article", author = as.character(authors),
+            title = as.character(title),
+            journaltitle = as.character(venue), year, 
+            key = row_number() + nrow(articles),url=url) %>%
+  mutate(journaltitle = ifelse(str_detect(journaltitle, "Benton County"), 
+                               "Benton County Sheriff's Office and the Willamette Criminal Justice Commission",
+                               journaltitle)) %>%
+  arrange(desc(year))
+
+bind_rows(articles, reports) %>%
+  RefManageR::as.BibEntry(.) %>% 
+  RefManageR::WriteBib("lanfear.bib", verbose=FALSE)
+```
+
+```{r, eval=TRUE}
+bibliography_entries("lanfear.bib") %>%
+  filter(as.numeric(key) <= nrow(articles))
+```
+
+# Teaching
+## As Instructor of Record
+```{r}
+str_c_if_exists <- function(x,y){
+  ifelse(!is.na(x), ifelse(!is.na(y), str_c(x, "-", y), x), y)
+}
+cv_entries %>%
+  filter(type == "teaching") %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+  # mutate(additional_info = ifelse(additional_info == "1 term", NA_character_, additional_info)) %>%
+  arrange(desc(year_end), desc(year_begin)) %>%
+# tribble(
+#   ~ Degree, ~ Year, ~ Institution, ~ Where,
+#   "Informal studies", "", "Flying University", "Warsaw, Poland",
+#   "Master of Physics", "1893", "Sorbonne Université", "Paris, France",
+#   "Master of Mathematics", "1894", "Sorbonne Université", "Paris, France"
+# ) %>% 
+  detailed_entries(what, when , NA, where=where, why=additional_info)
+```
+
+\newpage
+## As Teaching Assistant
+```{r}
+cv_entries %>%
+  filter(type == "teaching_ta") %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+  # mutate(additional_info = ifelse(additional_info == "1 term", NA_character_, additional_info)) %>%
+  arrange(desc(year_end), desc(year_begin)) %>%
+# tribble(
+#   ~ Degree, ~ Year, ~ Institution, ~ Where,
+#   "Informal studies", "", "Flying University", "Warsaw, Poland",
+#   "Master of Physics", "1893", "Sorbonne Université", "Paris, France",
+#   "Master of Mathematics", "1894", "Sorbonne Université", "Paris, France"
+# ) %>% 
+  detailed_entries(what, when , NA, where=where, why=additional_info)
+```
+
+```{r, eval=FALSE}
+cv_entries %>% 
+  filter(type == 'workshop') %>% 
+  arrange(desc(year_begin), desc(year_end)) %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+  #mutate(what = str_c(what, " | ", where)) %>%
+  mutate(where = str_replace(where, "Population Association", "Population Assoc.")) %>%
+  detailed_entries(additional_info, when , what, where=where, why=NA) 
+```
+
+# Research Reports
+```{r, eval=TRUE}
+bibliography_entries("lanfear.bib")  %>%
+  filter(as.numeric(key) > nrow(articles))
+```
+
+
+```{r, eval= FALSE}
+# Selected Work Experience
+cv_entries %>% 
+  filter(type == 'work')%>% 
+  arrange(desc(str_sub(year_end, -4, -1))) %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+  # mutate(what = str_c(what, " | ", where)) %>%
+  brief_entries(what, NA , when) 
+```
+
+# Grants and Awards
+```{r, eval= TRUE}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'grants_and_awards') %>% 
+  arrange(desc(year_begin), desc(year_end)) %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+#   mutate(what = str_c(what, " | ", where)) %>%
+  brief_entries(what, when , where) 
+
+  # mutate(what = str_c(what, ", ", where)) %>% 
+  # mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
+  # select(year, what) %>% 
+  # kable()
+```
+
+
+```{r, eval= FALSE}
+# Media Coverage
+cv_entries %>% 
+  filter(type == 'media') %>% 
+  arrange(desc(date)) %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+  # mutate(what = str_c(what, " | ", where)) %>%
+  brief_entries(what, when , where) 
+
+  # arrange(desc(date)) %>%
+  # mutate(what = ifelse(!is.na(url), str_c("[", what, ".](", url, ")"), what)) %>% #turn title into link
+  # mutate(date = format(date, format = "%b %e, %Y")) %>%
+  # mutate(citation = str_c(what, " *", where, "*")) %>%
+  # select(date, citation) %>% 
+  # kable()
+```
+
+# Service
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'service') %>% 
+  arrange(desc(year_end)) %>%
+  mutate(when = str_c_if_exists(year_begin, year_end) ) %>%
+  # mutate(what = str_c(what, "  |  ", where)) %>%
+  brief_entries(what, when , where, .protect=TRUE) 
+  #mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
+  # mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
+  # mutate(what = str_c(what, ", ", where)) %>%
+  # mutate(year = case_when( 
+  #          !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, " --- ", year_end),
+  #          is.na(year_end) & !is.na(year_begin) ~ year_begin,
+  #          !is.na(year_end) & is.na(year_begin) ~ year_end,
+  #          TRUE ~ "ERROR"
+  #          )) %>% 
+  # mutate(year_begin = ifelse(is.na(year_begin), year_end, year_begin)) %>%
+  # arrange(desc(year_begin)) %>%
+  # select(year, what) %>% 
+  # kable()
+```
