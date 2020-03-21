@@ -27,18 +27,8 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 ```{r}
 cv_entries %>%
   filter(type == "education") %>%
-# tribble(
-#   ~ Degree, ~ Year, ~ Institution, ~ Where,
-#   "Informal studies", "", "Flying University", "Warsaw, Poland",
-#   "Master of Physics", "1893", "Sorbonne Université", "Paris, France",
-#   "Master of Mathematics", "1894", "Sorbonne Université", "Paris, France"
-# ) %>% 
   mutate(count = ifelse(what %in% c("PhD in Sociology", "Master of Arts in Sociology"), 2, 1)) %>%
   tidyr::uncount(count) %>%
-#     what == "Master of Arts in Sociology" ~ "Thesis: Disorder in the Neighborhood: A Large-Scale Field Experiment on
-# Disorder, Norm Violation, and Pro-Social Behavior",
-#     what == "Master of Public Policy" ~ "Exploring a Mental Health Crisis",
-#    TRUE ~ NA_character_)) %>%
   group_by(what) %>%
   arrange(desc(year_begin)) %>% 
   mutate(rownum = row_number()) %>%
@@ -49,7 +39,6 @@ cv_entries %>%
     what == "Master of Arts in Sociology" & rownum==2 ~ "Recipient: University of Washington Distinguished Master's Thesis Award",
     what == "Master of Public Policy" & rownum==1 ~ "Concentration: Law, Crime, and Policy",
     TRUE ~ NA_character_)) %>%
-  # mutate(what = str_c(what, ", ", where)) %>%
   detailed_entries(what, year_begin, NA, where=where, why=detail) 
 ```
 
