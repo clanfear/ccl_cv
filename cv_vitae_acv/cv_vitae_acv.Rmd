@@ -71,7 +71,7 @@ reports <- publications %>%
   filter(type == "report") %>%
     transmute(bibtype = "Article", author = as.character(authors),
             title = as.character(title),
-            journaltitle = as.character(venue), year, 
+            journaltitle = as.character(venue), year = as.numeric(year), 
             key = row_number() + nrow(articles),url=url) %>%
   mutate(journaltitle = ifelse(str_detect(journaltitle, "Benton County"), 
                                "Benton County Sheriff's Office and the Willamette Criminal Justice Commission",

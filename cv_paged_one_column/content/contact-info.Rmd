@@ -1,0 +1,16 @@
+```{block type='col-6 grid-item', echo=TRUE}
+## Contact information {.box}
+<div class="info-box">
+
+| Center | Left |
+|:------:|:-----|
+| <i class="fas fa-map-marker-alt"></i>|Department of Sociology,\
+University of Washington|
+| <i class="fas fa-envelope"></i> | clanfear\@uw.edu |
+| <i class="fas fa-globe"></i> | [clanfear.github.io](https://clanfear.github.io) |
+| <i class="fab fa-github"></i> | [clanfear](https://github.com/clanfear/) |
+| <i class="fab fa-twitter"></i> | [\@cclanfear](https://twitter.com/cclanfear) |
+| <i class="fab fa-google"></i> | [Google Scholar](https://scholar.google.com/citations?hl=en&user=DAFuktIAAAAJ&view_op=list_works&sortby=pubdate) |
+
+</div>
+```

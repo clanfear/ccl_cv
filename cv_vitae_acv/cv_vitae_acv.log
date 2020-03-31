@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.3.13)  13 MAR 2020 13:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.3.13)  30 MAR 2020 19:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -684,7 +684,7 @@ Package hyperref Info: Option `breaklinks' set `true' on input line 129.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 129.
 \@quotelevel=\count390
 \@quotereset=\count391
-(./cv_vitae_acv.aux)
+No file cv_vitae_acv.aux.
 \openout1 = `cv_vitae_acv.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 129.
@@ -785,8 +785,8 @@ Package biblatex Info: Data encoding 'utf8' specified.
 \openout3 = `cv_vitae_acv.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'cv_vitae_acv.bbl' found.
-(./cv_vitae_acv.bbl)
+Package biblatex Info: ... file 'cv_vitae_acv.bbl' not found.
+No file cv_vitae_acv.bbl.
 Package biblatex Info: Reference section=0 on input line 129.
 Package biblatex Info: Reference segment=0 on input line 129.
 \AtBeginShipoutBox=\box53
@@ -809,136 +809,22 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 129.
 LaTeX Info: Redefining \pageref on input line 129.
 LaTeX Info: Redefining \nameref on input line 129.
-(./cv_vitae_acv.out) (./cv_vitae_acv.out)
-\@outlinefile=\write4
-\openout4 = `cv_vitae_acv.out'.
-
-\pagenumberwidth=\skip106
-\makecvheadpicturebox=\box54
-\makecvheadpicturewidth=\skip107
-\makecvheadnamebox=\box55
-
-Underfull \hbox (badness 10000) in paragraph at lines 132--132
-
- []
-
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-37.
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
-File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-37.
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
-File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-137.
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
-File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-137.
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
-File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 137.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 137.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 137.
-
-LaTeX Font Warning: Font shape `U/fontawesometwo/m/sl' undefined
-(Font)              using `U/fontawesometwo/m/n' instead on input line 169.
-
-LaTeX Font Info:    Trying to load font information for T1+DejaVuSansMono-TLF o
-n input line 169.
-
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/dejavu/T1DejaVuSan
-sMono-TLF.fd
-File: T1DejaVuSansMono-TLF.fd 2011/06/01 Font definitions for T1/DejaVuSansMono
--TLF.
-)
-LaTeX Font Info:    Font shape `T1/DejaVuSansMono-TLF/m/sl' in size <10.95> not
- available
-(Font)              Font shape `T1/DejaVuSansMono-TLF/m/it' tried instead on in
-put line 169.
-LaTeX Font Info:    Font shape `T1/DejaVuSansMono-TLF/m/it' will be
-(Font)              scaled to size 9.41699pt on input line 169.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `DejaVuSansMono-TLF' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-69.
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for U+fontawesomethree on i
-nput line 169.
-
-(c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fontawesome/ufonta
-wesomethree.fd
-File: ufontawesomethree.fd 2016/05/22 Font definitions for U/fontawesomethree.
-)
-
-LaTeX Font Warning: Font shape `U/fontawesomethree/m/sl' undefined
-(Font)              using `U/fontawesomethree/m/n' instead on input line 169.
-
-[1
-
-{c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
-x.map}]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 203.
-[2]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 203.
-(./cv_vitae_acv.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 203.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 203.
-Package rerunfilecheck Info: File `cv_vitae_acv.out' has not changed.
-(rerunfilecheck)             Checksum: 302BF9E58B8D9964744F88D4FAA11DE6;953.
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
-
-LaTeX Warning: There were undefined references.
-
-
-Package biblatex Warning: Please rerun LaTeX.
-(biblatex)                Page breaks have changed.
-
-Package logreq Info: Writing requests to 'cv_vitae_acv.run.xml'.
-\openout1 = `cv_vitae_acv.run.xml'.
-
- ) 
+(./cv_vitae_acv.out) (./cv_vitae_acv.out
+! I can't write on file `cv_vitae_acv.pdf'.
+(Press Enter to retry, or Control-Z to exit; default file extension is `.pdf')
+Please type another file name for output
+! Emergency stop.
+\Hy@OutlineName ...utline goto name{#2}count#3{#4}
+                                                  
+l.1 ...\000d\000u\000c\000a\000t\000i\000o\000n}{}
+                                                  % 1 
 Here is how much of TeX's memory you used:
- 20475 strings out of 482938
- 348808 string characters out of 5958840
- 1019009 words of memory out of 5000000
- 35391 multiletter control sequences out of 15000+600000
- 588438 words of font info for 76 fonts, out of 8000000 for 9000
+ 19915 strings out of 482938
+ 336225 string characters out of 5958840
+ 1007572 words of memory out of 5000000
+ 34957 multiletter control sequences out of 15000+600000
+ 538413 words of font info for 32 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,13n,66p,778b,1120s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/fontawesom
-e/fontawesomethree.enc}{c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/fonts
-/enc/dvips/lm/lm-ts1.enc}{c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/fon
-ts/enc/dvips/dejavu/dejavumono_t1-type1.enc}{c:/Users/cclan/AppData/Roaming/Tin
-yTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{c:/Users/cclan/AppData/Roaming/Ti
-nyTeX/texmf-dist/fonts/enc/dvips/fontawesome/fontawesometwo.enc}<c:/Users/cclan
-/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/dejavu/DejaVuSansMono-Ob
-lique.pfb><c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
-/fontawesome/FontAwesome.pfb><c:/Users/cclan/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/lm/lmbx10.pfb><c:/Users/cclan/AppData/Roaming/TinyTeX/texmf
--dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/cclan/AppData/Roaming/TinyTeX/t
-exmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/cclan/AppData/Roaming/TinyT
-eX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/cclan/AppData/Roaming/T
-inyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/cclan/AppData/Roam
-ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro10.pfb>
-Output written on cv_vitae_acv.pdf (2 pages, 196522 bytes).
-PDF statistics:
- 124 PDF objects out of 1000 (max. 8388607)
- 109 compressed objects within 2 object streams
- 29 named destinations out of 1000 (max. 500000)
- 21057 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 43i,1n,49p,778b,743s stack positions out of 5000i,500n,10000p,200000b,80000s
 
+!  ==> Fatal error occurred, no output PDF file produced!
