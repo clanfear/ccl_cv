@@ -175,7 +175,10 @@ td {
   height: 100px;
 }
 
-
+a {
+  color: #000000;
+  text-decoration: none;
+}
 
 /****** Page numbers ******/
 @page {

@@ -98,7 +98,7 @@ cv_entries %>%
   kable()
 ```
 
-## Grants and Awards {.nohead .grants .set-width}
+## Grants and Awards {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
@@ -109,7 +109,7 @@ cv_entries %>%
   kable()
 ```
 
-## Service {.nohead .service .set-width}
+## Service {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'service') %>% 
