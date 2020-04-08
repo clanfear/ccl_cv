@@ -39,20 +39,23 @@ cv_entries %>%
   arrange(desc(year_begin)) %>%
   filter(type == 'education') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
+  mutate(year_begin = str_replace(year_begin, "In Progress", "Ongoing")) %>%
   # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   select(year_begin, what) %>% 
   kable()
 ```
 
-
 ## Publications {.nohead .publications .set-width}
 ```{r}
 publications_table <- publications %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_c("9",year),year)) %>%
   arrange(desc(year), authors) %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_remove(year, "^9"),year)) %>%
   mutate(author_year = str_c(authors, ". ", year, ". ")) %>%
   mutate(title = ifelse(!is.na(url), str_c("[", title, "](", url, ")"), title)) %>% #turn title into link
   mutate(citation = case_when(
-    type == "article" ~ str_c(author_year, title, ". ","*", venue,"* ", issue),
+    type == "article" ~ str_c(author_year, title, ". ","*", venue,"* ", ifelse(!is.na(issue), issue, "")),
+    type == "report" ~ str_c(author_year, title, ". ","*", venue, "*"),
     type == "prep" ~ str_c(authors, ". ", title, ".", ifelse(!is.na(venue), str_c(" In preparation for *",venue,"*"), "")),
     TRUE ~  str_c(authors, ". ", title, ". ", "*", venue,"*"))) %>%
   mutate(citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**"))
@@ -61,10 +64,9 @@ publications_table %>%
   filter(type == "article") %>% 
   select(citation) %>%
   knitr::kable()
-
 ```
 
-## In Preparation {.nohead .prep .set-width}
+## In Preparation {.nohead .publications .set-width}
 
 ```{r}
 publications_table %>%
@@ -73,7 +75,7 @@ publications_table %>%
   knitr::kable()
 ```
 
-## Reports {.nohead .reports .set-width}
+## Reports {.nohead .publications .set-width}
 
 ```{r}
 publications_table %>%
@@ -93,7 +95,7 @@ cv_entries %>%
   kable()
 ```
 
-## Posters {.nohead .posters .set-width}
+## Posters {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'poster') %>%
@@ -104,20 +106,20 @@ cv_entries %>%
   kable()
 ```
 
-## Courses (Instructor) {.nohead .courses .set-width}
+## Courses (Instructor) {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'teaching') %>% 
   mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
   mutate(what = ifelse(!is.na(additional_info), 
-    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, " - ", additional_info),
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
 
-## Workshops {.nohead .workshops .set-width}
+## Workshops {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'workshop') %>% 
@@ -131,7 +133,7 @@ cv_entries %>%
   kable()
 ```
 
-## Lectures {.nohead .lectures .set-width}
+## Lectures {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'lecture') %>% 
@@ -145,7 +147,7 @@ cv_entries %>%
   kable()
 ```
 
-## Courses (TA) {.nohead .ta .set-width}
+## Courses (TA) {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'teaching_ta') %>% 
@@ -159,7 +161,7 @@ cv_entries %>%
   kable()
 ```
 
-## Grants and awards {.nohead .grants .set-width}
+## Grants and awards {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
@@ -170,7 +172,7 @@ cv_entries %>%
   kable()
 ```
 
-## Media coverage {.nohead .media .set-width}
+## Media coverage {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'media') %>%
@@ -182,7 +184,7 @@ cv_entries %>%
   kable()
 ```
 
-## Service {.nohead .service .set-width}
+## Service {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'service') %>% 
@@ -201,7 +203,7 @@ cv_entries %>%
   kable()
 ```
 
-## Reviews {.nohead .reviews .set-width}
+## Reviews {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'reviewer') %>%
@@ -209,7 +211,7 @@ cv_entries %>%
   kable()
 ```
 
-## Selected work experience {.nohead .work .set-width}
+## Selected work experience {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'work') %>% 
