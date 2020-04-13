@@ -172,18 +172,6 @@ cv_entries %>%
   kable()
 ```
 
-## Media coverage {.nohead .talks .set-width}
-```{r, eval= TRUE}
-cv_entries %>% 
-  filter(type == 'media') %>%
-  arrange(desc(date)) %>%
-  mutate(what = ifelse(!is.na(url), str_c("[", what, ".](", url, ")"), what)) %>% #turn title into link
-  mutate(date = format(date, format = "%b %e, %Y")) %>%
-  mutate(citation = str_c(what, " *", where, "*")) %>%
-  select(date, citation) %>% 
-  kable()
-```
-
 ## Service {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
@@ -203,11 +191,15 @@ cv_entries %>%
   kable()
 ```
 
-## Reviews {.nohead .talks .set-width}
+## Media coverage {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
-  filter(type == 'reviewer') %>%
-  select(what) %>% 
+  filter(type == 'media') %>%
+  arrange(desc(date)) %>%
+  mutate(what = ifelse(!is.na(url), str_c("[", what, ".](", url, ")"), what)) %>% #turn title into link
+  mutate(date = format(date, format = "%b %e, %Y")) %>%
+  mutate(citation = str_c(what, " *", where, "*")) %>%
+  select(date, citation) %>% 
   kable()
 ```
 
@@ -221,5 +213,13 @@ cv_entries %>%
     str_c(what, "<br>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
+  kable()
+```
+
+## Reviews {.nohead .talks .set-width}
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'reviewer') %>%
+  select(what) %>% 
   kable()
 ```
