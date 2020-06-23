@@ -84,7 +84,7 @@ publications_table %>%
   knitr::kable()
 ```
 
-## Talks {.nohead .talks .set-width}
+## Presentations {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'talk') %>% 
@@ -133,7 +133,7 @@ cv_entries %>%
   kable()
 ```
 
-## Lectures {.nohead .talks .set-width}
+## Guest Lectures {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'lecture') %>% 
