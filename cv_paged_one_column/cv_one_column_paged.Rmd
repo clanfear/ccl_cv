@@ -65,6 +65,7 @@ publications_table %>%
   select(citation) %>%
   knitr::kable()
 ```
+<br>
 
 ## In Preparation {.nohead .publications .set-width}
 
@@ -114,7 +115,7 @@ cv_entries %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, " - ", additional_info),
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -141,22 +142,22 @@ cv_entries %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
   kable()
 ```
 
-## Courses (TA) {.nohead .talks .set-width}
+## Courses (TA) {.nohead .talks}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'teaching_ta') %>% 
   arrange(desc(year_end)) %>%
   mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
   mutate(what = ifelse(!is.na(additional_info), 
-    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, " - ", additional_info),
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -167,7 +168,7 @@ cv_entries %>%
   arrange(desc(year_begin)) %>%
   filter(type == 'grants_and_awards') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>%
   select(year, what) %>% 
   kable()
 ```
@@ -180,7 +181,7 @@ cv_entries %>%
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = str_c(what, ", ", where)) %>%
   mutate(year = case_when( 
-           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, " --- ", year_end),
+           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, "---", year_end),
            is.na(year_end) & !is.na(year_begin) ~ year_begin,
            !is.na(year_end) & is.na(year_begin) ~ year_end,
            TRUE ~ "ERROR"
@@ -211,7 +212,7 @@ cv_entries %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c(what, "<br>", where, "<br>", additional_info),
     str_c(what, "<br>", where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
