@@ -42,7 +42,8 @@ cv_entries %>%
   mutate(year_begin = str_replace(year_begin, "In Progress", "Ongoing")) %>%
   # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   select(year_begin, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Publications {.nohead .publications .set-width}
@@ -93,7 +94,8 @@ cv_entries %>%
   arrange(desc(date)) %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Posters {.nohead .talks .set-width}
@@ -104,7 +106,8 @@ cv_entries %>%
   arrange(desc(date)) %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Courses (Instructor) {.nohead .talks .set-width}
@@ -117,7 +120,8 @@ cv_entries %>%
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Workshops {.nohead .talks .set-width}
@@ -131,24 +135,26 @@ cv_entries %>%
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Guest Lectures {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'lecture') %>% 
+  arrange(desc(date)) %>%
   mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
-## Courses (TA) {.nohead .talks}
+## Courses (TA) {.nohead .talks }
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'teaching_ta') %>% 
@@ -159,7 +165,8 @@ cv_entries %>%
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Grants and awards {.nohead .talks .set-width}
@@ -170,7 +177,8 @@ cv_entries %>%
   mutate(what = str_c(what, ", ", where)) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>%
   select(year, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Service {.nohead .talks .set-width}
@@ -189,7 +197,8 @@ cv_entries %>%
   mutate(year_begin = ifelse(is.na(year_begin), year_end, year_begin)) %>%
   arrange(desc(year_begin)) %>%
   select(year, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Media coverage {.nohead .talks .set-width}
@@ -201,7 +210,8 @@ cv_entries %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   mutate(citation = str_c(what, " *", where, "*")) %>%
   select(date, citation) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1in")
 ```
 
 ## Selected work experience {.nohead .talks .set-width}
@@ -214,7 +224,8 @@ cv_entries %>%
     str_c(what, "<br>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
-  kable()
+  kable(format = "html", escape=FALSE) %>%
+  kableExtra::column_spec(1, width = "1.5in")
 ```
 
 ## Reviews {.nohead .talks .set-width}
