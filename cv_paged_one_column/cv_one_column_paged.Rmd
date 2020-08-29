@@ -99,6 +99,7 @@ cv_entries %>%
 ```
 
 <br>
+<br>
 
 ## Posters {.nohead .talks .set-width}
 ```{r, eval= TRUE}
