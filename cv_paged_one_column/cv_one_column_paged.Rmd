@@ -1,5 +1,5 @@
 ---
-title: "Charles C. Lanfear <br> Curriculum vitae"
+title: "Charles C. Lanfear <br> Curriculum Vitae"
 #date: "`r Sys.Date()`"
 output:
   pagedown::html_paged:
@@ -76,7 +76,7 @@ publications_table %>%
   knitr::kable()
 ```
 
-## Policy reports {.nohead .publications .set-width}
+## Policy Reports {.nohead .publications .set-width}
 
 ```{r}
 publications_table %>%
@@ -174,7 +174,7 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
-## Grants and awards {.nohead .talks .set-width}
+## Grants and Awards {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
@@ -206,7 +206,7 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
-## Media coverage {.nohead .talks .set-width}
+## Media Coverage {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'media') %>%
@@ -219,7 +219,7 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
-## Selected work experience {.nohead .talks .set-width}
+## Selected Work Experience {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'work') %>% 
