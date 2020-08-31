@@ -76,7 +76,7 @@ publications_table %>%
   knitr::kable()
 ```
 
-## Reports {.nohead .publications .set-width}
+## Policy reports {.nohead .publications .set-width}
 
 ```{r}
 publications_table %>%
@@ -90,8 +90,8 @@ publications_table %>%
 cv_entries %>% 
   filter(type == 'talk') %>% 
   # mutate(what = str_c("*", what, "*")) %>%
-  mutate(what = ifelse(!is.na(additional_info), str_c(what, " ", additional_info), what)) %>%
-  mutate(what = str_c(what, ". ", where)) %>% 
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, " (", additional_info, ")"), what)) %>%
+  mutate(what = str_c(what, ". ", "*", str_replace(where, ",", "*,"))) %>% 
   arrange(desc(date)) %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
@@ -103,7 +103,7 @@ cv_entries %>%
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'poster') %>%
-  mutate(what = str_c(what, ". ", where)) %>% 
+  mutate(what = str_c(what, ". ", "*", str_replace(where, ",", "*,"))) %>% 
   arrange(desc(date)) %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
