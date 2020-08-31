@@ -89,7 +89,9 @@ publications_table %>%
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'talk') %>% 
-  mutate(what = str_c("*", what, "*, ", where)) %>% 
+  # mutate(what = str_c("*", what, "*")) %>%
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, " ", additional_info), what)) %>%
+  mutate(what = str_c(what, ". ", where)) %>% 
   arrange(desc(date)) %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
@@ -101,7 +103,7 @@ cv_entries %>%
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'poster') %>%
-  mutate(what = str_c("*", what, "*, ", where)) %>% 
+  mutate(what = str_c(what, ". ", where)) %>% 
   arrange(desc(date)) %>%
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
