@@ -99,8 +99,6 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
-<br>
-
 ## Posters {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
