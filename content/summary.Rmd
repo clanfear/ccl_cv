@@ -1,4 +1,0 @@
-```{block type="col-6 grid-item", echo=TRUE}
-## Personal summary {.summary}
-I am a graduate student in Sociology. My interests lie in the application of novel statistical and computational methods to questions at the intersection of criminology, sociology, and demography. My current projects broadly examine how demographic and built environment characteristics of places influence social control and situational opportunity to determine the distribution of crime in time and place.
-```
