@@ -238,5 +238,6 @@ cv_entries %>%
 cv_entries %>% 
   filter(type == 'reviewer') %>%
   select(what) %>% 
+  arrange(what) %>%
   kable()
 ```
