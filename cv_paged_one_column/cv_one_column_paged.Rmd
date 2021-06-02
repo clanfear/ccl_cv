@@ -1,15 +1,9 @@
 ---
 title: "Charles C. Lanfear <br> Curriculum Vitae"
-#date: "`r Sys.Date()`"
 output:
   pagedown::html_paged:
-    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
-    #CDS
-    # css: ["https://use.fontawesome.com/releases/v5.15.3/css/all.css", "style/one-column-paged.css"]
     css: "style/one-column-paged.css"
-    #offline
-    #css: ["style/one-column-paged.css", "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
     includes:
       in_header: "content/myheader.html"
@@ -21,6 +15,7 @@ library(dplyr)
 library(stringr)
 library(knitr)
 
+# Clever solution from https://stackoverflow.com/a/43334558 to add code to head
 fileConn <- file("./content/myheader.html")
 writeLines('<script src="https://kit.fontawesome.com/a63d56dbfb.js" crossorigin="anonymous"></script>', fileConn)
 close(fileConn)
