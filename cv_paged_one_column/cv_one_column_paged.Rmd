@@ -35,6 +35,18 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 ```
 </div>
 
+## Present Positions {.education .nohead .set-width}
+```{r, eval= TRUE}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'appointments') %>% 
+  mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>%
+  # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
+```
+
 ## Education {.education .nohead .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 

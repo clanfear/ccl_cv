@@ -1,4 +1,4 @@
 ```{block type="col-6 grid-item", echo=TRUE}
 ## Personal Summary {.summary}
-I am a graduate student in Sociology. My interests lie in the application of statistical and computational methods to questions at the intersection of criminology, sociology, and demography. My current projects broadly examine how demographic and built environment characteristics of places influence social control and situational opportunity to determine the distribution of crime in time and place.
+I am a Postdoctoral Researcher at the Centre for Social Investigation and a Research Fellow of Nuffield College, University of Oxford. My primary research focuses on how characteristics of communities impact crime, social control, and their consequences. I approach this topic with methods from demography, computational social science, and causal inference.
 ```
