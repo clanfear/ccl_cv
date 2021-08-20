@@ -71,7 +71,7 @@ publications_table <- publications %>%
   mutate(citation = case_when(
     type == "article" ~ str_c(author_year, title, ". ","*", venue,"* ", ifelse(!is.na(issue), issue, "")),
     type == "report" ~ str_c(author_year, title, ". ","*", venue, "*"),
-    type == "prep" ~ str_c(authors, ". ", title, ".", ifelse(!is.na(venue), str_c(" In preparation for *",venue,"*"), "")),
+    type == "prep" ~ str_c(authors, ". ", title, ". ", ifelse(!is.na(venue), str_c("*",venue,"*"), "")),
     TRUE ~  str_c(authors, ". ", title, ". ", "*", venue,"*"))) %>%
   mutate(citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**"))
 
@@ -81,11 +81,12 @@ publications_table %>%
   knitr::kable()
 ```
 
-## In Preparation {.nohead .publications .set-width}
+## Works in Progress {.nohead .publications .set-width}
 
 ```{r}
 publications_table %>%
   filter(type == "prep") %>% 
+  arrange(desc(year), authors) %>%
   select(citation) %>%
   knitr::kable()
 ```
