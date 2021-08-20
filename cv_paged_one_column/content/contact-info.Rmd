@@ -4,9 +4,9 @@
 
 | Center | Left |
 |:------:|:-----|
-| <i class="fas fa-map-marker-alt"></i>|Center for Social Investigation,\
-Nuffield College,\
-University of Oxford|
+| <i class="fas fa-map-marker-alt"></i>|[Centre for Social Investigation](http://csi.nuff.ox.ac.uk/),\
+[Nuffield College](https://www.nuffield.ox.ac.uk/),\
+[University of Oxford](https://www.ox.ac.uk/)|
 | <i class="fas fa-envelope"></i> | cclanfear\@gmail.com |
 | <i class="fas fa-globe"></i> | [clanfear.github.io](https://clanfear.github.io) |
 | <i class="fab fa-github"></i> | [clanfear](https://github.com/clanfear/) |
