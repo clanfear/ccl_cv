@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(dplyr)
 library(stringr)
 library(knitr)
+library(lubridate)
 
 # Clever solution from https://stackoverflow.com/a/43334558 to add code to head
 fileConn <- file("./content/myheader.html")
@@ -23,6 +24,12 @@ close(fileConn)
 publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
 
 cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
+
+# Edit the CSS file with the current date at render time.
+current_date <- Sys.Date()
+css_file  <- readLines("./style/one-column-paged.css")
+css_file  <- gsub(pattern = "(DATE_PLACEHOLDER)|(\\d\\d? [A-Za-z]{3} \\d{4})", replace = str_glue("{day(current_date)} {month(current_date, label = TRUE, abbr = TRUE)} {year(current_date)}"), x = css_file)
+writeLines(css_file, con="./style/one-column-paged.css")
 
 ```
 

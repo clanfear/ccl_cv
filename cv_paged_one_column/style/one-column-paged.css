@@ -203,6 +203,9 @@ a {
   @bottom-right {
     content: counter(page);
   }
+  @bottom-left {
+    content: "23 Jan 2022"
+  }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
   align-items: baseline;
