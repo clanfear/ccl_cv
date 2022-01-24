@@ -204,9 +204,12 @@ a {
     content: counter(page);
   }
   @bottom-left {
-    content: "23 Jan 2022<br>"
+    content: "23 Jan 2022
   }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
+  align-items: baseline;
+}
+.pagedjs_margin.pagedjs_margin-bottom-left.hasContent {
   align-items: baseline;
 }
