@@ -204,7 +204,7 @@ a {
     content: counter(page);
   }
   @bottom-left {
-    content: "23 Jan 2022
+    content: "23 Jan 2022"
   }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
