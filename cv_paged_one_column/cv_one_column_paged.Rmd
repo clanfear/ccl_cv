@@ -28,7 +28,7 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 # Edit the CSS file with the current date at render time.
 current_date <- Sys.Date()
 css_file  <- readLines("./style/one-column-paged.css")
-css_file  <- gsub(pattern = "(\\d\\d? [A-Za-z]{3} \\d{4})", replace = str_glue("{month(current_date, label = TRUE, abbr = TRUE)} {day(current_date)}, {year(current_date)}"), x = css_file)
+css_file  <- gsub(pattern = "([A-Za-z]{3} \\d\\d?, \\d{4})", replace = str_glue("{month(current_date, label = TRUE, abbr = TRUE)} {day(current_date)}, {year(current_date)}"), x = css_file)
 writeLines(css_file, con="./style/one-column-paged.css")
 
 ```
