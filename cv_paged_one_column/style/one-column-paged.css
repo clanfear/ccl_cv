@@ -205,11 +205,9 @@ a {
   }
   @bottom-left {
     content: "23 Jan 2022"
+    align-items: baseline;
   }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
-  align-items: baseline;
-}
-.pagedjs_margin.pagedjs_margin-bottom-left.hasContent {
   align-items: baseline;
 }
