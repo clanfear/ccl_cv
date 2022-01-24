@@ -204,7 +204,7 @@ a {
     content: counter(page);
   }
   @bottom-left {
-    content: "23 Jan 2022"
+    content: "Jan 23, 2022"
     align-items: baseline;
   }
 }
