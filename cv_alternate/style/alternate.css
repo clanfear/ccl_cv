@@ -11,9 +11,9 @@ body {
   --page-width: 8.5in;
   --pagedjs-margin-right: 0.7in;
   --pagedjs-margin-left: 0.7in;
-  --pagedjs-margin-top: 0.5in;
-  --pagedjs-margin-bottom: 0.5in;
-  --root-font-size: 12pt;
+  --pagedjs-margin-top: 0.7in;
+  --pagedjs-margin-bottom: 0.7in;
+  --root-font-size: 11pt;
   --viewer-pages-spacing: 12px;
   --viewer-shadow-color: #313131; /* this marks the pages */
 }
@@ -67,7 +67,7 @@ p, li {
 h1.title {
   text-align: center;
   font-weight: normal;
-  font-size: 2.3em;
+  font-size: 18pt;
   line-height: 110%;
 }
 
@@ -77,8 +77,8 @@ h2 {
   border-bottom: 1px solid black;
   margin-top: 0.6em;
   margin-bottom: 0.3em;
-  font-size: 1.5em;
-  font-weight: normal;
+  font-size: 14pt;
+  font-weight: bold;
 }
 
 
@@ -125,7 +125,7 @@ h2.box {
 }
 /* set the width of the first column in the tables */
 .education td:first-child {
-  width: 18%;
+  width: 16%;
 }
 
 .set-width td:first-child {
@@ -134,7 +134,7 @@ h2.box {
 }
 
 .service td:first-child {
-  width: 16.5%;
+  width: 16%;
 }
 
 .cv-table td:first-child {
@@ -144,7 +144,7 @@ h2.box {
 .publications td,
 .talks td {
   vertical-align: top;
-  font-size: 0.9em;
+  font-size: 11pt;
   text-align: left;
 }
 
@@ -160,7 +160,7 @@ tr {
 }
 
 .smaller-font {
-  font-size: 0.9em;
+  font-size: 11pt;
 }
 
 td {
@@ -169,7 +169,12 @@ td {
 }
 
 .work-title {
-  font-size: 1.2em;
+  font-size: 11pt;
+  font-weight: bold;
+}
+.work-italic {
+  font-size: 11pt;
+  font-style: italic;
 }
 .work-break {
   height: 100px;
@@ -204,8 +209,7 @@ a {
     content: counter(page);
   }
   @bottom-left {
-    content: "Jan 25, 2022";
-    align-items: baseline;
+    content: none;
   }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
