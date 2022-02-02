@@ -2,7 +2,7 @@
 title: "Charles C. Lanfear <br> Curriculum Vitae"
 output:
   pagedown::html_paged:
-    self_contained: false
+    self_contained: true
     css: "style/one-column-paged.css"
     number_sections: false
     includes:
@@ -24,14 +24,9 @@ close(fileConn)
 publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
 
 cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
-
-# Edit the CSS file with the current date at render time.
-current_date <- Sys.Date()
-css_file  <- readLines("./style/one-column-paged.css")
-css_file  <- gsub(pattern = "([A-Za-z]{3} \\d\\d?, \\d{4})", replace = str_glue("{month(current_date, label = TRUE, abbr = TRUE)} {day(current_date)}, {year(current_date)}"), x = css_file)
-writeLines(css_file, con="./style/one-column-paged.css")
-
 ```
+
+<div class="center">`r format(Sys.Date(), format='%B %e, %Y')`</div>
 
 <div class="grid-container">
 <!-- top row -->

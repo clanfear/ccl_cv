@@ -191,6 +191,9 @@ a {
   width:33.33333%;
   text-align:left;
 }
+.center {
+  text-align: center;
+}
 
 /****** Page numbers ******/
 @page {
@@ -204,8 +207,7 @@ a {
     content: counter(page);
   }
   @bottom-left {
-    content: "Feb 1, 2022";
-    align-items: baseline;
+    content: none;
   }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
