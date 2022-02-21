@@ -83,9 +83,10 @@ publications_table %>%
   knitr::kable()
 ```
 
-## Works in Progress {.nohead .publications .set-width}
 
-```{r}
+
+```{r, eval= FALSE}
+## Works in Progress {.nohead .publications .set-width}
 publications_table %>%
   filter(type == "prep") %>% 
   arrange(desc(year), authors) %>%
