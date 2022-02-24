@@ -84,7 +84,6 @@ publications_table %>%
 ```
 
 
-
 ```{r, eval= FALSE}
 ## Works in Progress {.nohead .publications .set-width}
 publications_table %>%
@@ -117,8 +116,8 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
+```{r, eval= FALSE}
 ## Posters {.nohead .talks .set-width}
-```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'poster') %>%
   mutate(what = str_c(what, ". ", "*", str_replace(where, ",", "*,"))) %>% 
