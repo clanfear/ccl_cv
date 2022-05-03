@@ -15,14 +15,11 @@ library(dplyr)
 library(stringr)
 library(knitr)
 library(lubridate)
-
 # Clever solution from https://stackoverflow.com/a/43334558 to add code to head
 fileConn <- file("./content/myheader.html")
 writeLines('<script src="https://kit.fontawesome.com/a63d56dbfb.js" crossorigin="anonymous"></script>', fileConn)
 close(fileConn)
-
 publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
-
 cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 ```
 
@@ -37,7 +34,7 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 ```
 </div>
 
-## Present Positions {.education .nohead .set-width}
+## Professional Appointments {.education .nohead .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
@@ -142,8 +139,9 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
+
+```{r, eval= FALSE}
 ## Workshops {.nohead .talks .set-width}
-```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'workshop') %>% 
   arrange(desc(date)) %>%
@@ -157,7 +155,7 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
-## Guest Lectures {.nohead .talks .set-width}
+## Invited Talks {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'lecture') %>% 
@@ -168,25 +166,6 @@ cv_entries %>%
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
   mutate(date = format(date, format = "%b %e, %Y")) %>%
   select(date, what) %>% 
-  kable(format = "html", escape=FALSE) %>%
-  kableExtra::column_spec(1, width = "1in")
-```
-
-## Courses (TA) {.nohead .talks }
-```{r, eval= TRUE}
-cv_entries %>% 
-  filter(type == 'teaching_ta') %>% 
-  arrange(desc(year_end)) %>%
-  mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
-  mutate(what = ifelse(!is.na(additional_info), 
-    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, " - ", additional_info),
-    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = case_when(
-    is.na(year_end) ~ year_begin,
-    year_end == year_begin ~ year_begin,
-    !is.na(year_end) ~ str_c(year_begin, "---", year_end)
-    )) %>% 
-  select(year, what) %>% 
   kable(format = "html", escape=FALSE) %>%
   kableExtra::column_spec(1, width = "1in")
 ```

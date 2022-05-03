@@ -3,7 +3,7 @@ title: "Charles C. Lanfear <br> Curriculum Vitae"
 output:
   pagedown::html_paged:
     self_contained: true
-    css: "style/alternate.css"
+    css: "style/one-column-paged.css"
     number_sections: false
     includes:
       in_header: "content/myheader.html"
@@ -15,16 +15,15 @@ library(dplyr)
 library(stringr)
 library(knitr)
 library(lubridate)
-
 # Clever solution from https://stackoverflow.com/a/43334558 to add code to head
 fileConn <- file("./content/myheader.html")
 writeLines('<script src="https://kit.fontawesome.com/a63d56dbfb.js" crossorigin="anonymous"></script>', fileConn)
 close(fileConn)
-
 publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
-
 cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 ```
+
+<div class="center">`r format(Sys.Date(), format='%B %e, %Y')`</div>
 
 <div class="grid-container">
 <!-- top row -->
@@ -35,7 +34,7 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 ```
 </div>
 
-## Present Positions {.education .nohead .set-width}
+## Appointments {.education .nohead .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
@@ -81,9 +80,9 @@ publications_table %>%
   knitr::kable()
 ```
 
-## Works in Progress {.nohead .publications .set-width}
 
-```{r}
+```{r, eval= FALSE}
+## Works in Progress {.nohead .publications .set-width}
 publications_table %>%
   filter(type == "prep") %>% 
   arrange(desc(year), authors) %>%
@@ -114,8 +113,8 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
+```{r, eval= FALSE}
 ## Posters {.nohead .talks .set-width}
-```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'poster') %>%
   mutate(what = str_c(what, ". ", "*", str_replace(where, ",", "*,"))) %>% 
@@ -155,7 +154,7 @@ cv_entries %>%
   kableExtra::column_spec(1, width = "1in")
 ```
 
-## Guest Lectures {.nohead .talks .set-width}
+## Invited Talks {.nohead .talks .set-width}
 ```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'lecture') %>% 
@@ -239,10 +238,9 @@ cv_entries %>%
 cv_entries %>% 
   filter(type == 'work') %>% 
   arrange(desc(str_sub(year_end, -4, -1))) %>%
-  mutate(additional_info = ifelse(!is.na(additional_info), str_replace_all(additional_info, "\\*", "<br>&#8226; "), additional_info)) %>%
   mutate(what = ifelse(!is.na(additional_info), 
-    str_c("<span class='work-title'>", what,"</span>", "<br>", where, additional_info),
-    str_c("<span class='work-title'>",what,"</span>", "<br>", where))) %>% 
+    str_c(what, "<br>", where, "<br>", additional_info),
+    str_c(what, "<br>", where))) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable(format = "html", escape=FALSE) %>%
