@@ -1,0 +1,231 @@
+---
+title: "CV"
+output:
+  pagedown::html_paged:
+    template: custom_template.html
+    css:
+    - custom-fonts.css
+    - custom-page.css
+    - custom.css
+    toc: false
+    self_contained: true
+    includes:
+      in_header: "faheader.html"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(dplyr)
+library(stringr)
+library(knitr)
+library(lubridate)
+fileConn <- file("./faheader.html")
+writeLines('<script src="https://kit.fontawesome.com/a63d56dbfb.js" crossorigin="anonymous"></script>', fileConn)
+close(fileConn)
+publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
+cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
+```
+
+<div class="header-float">
+  <table>
+    <tr>
+      <td>
+      <a href="https://www.crim.cam.ac.uk/">Institute of Criminology</a><br>
+      <a href="https://www.cam.ac.uk/">University of Cambridge</a><br>
+      Cambridge CB3 1AD<br>
+      United Kingdom
+      </td>
+      <td>
+      <a href="mailto:cclanfear@gmail.com" class="email">cl948@cam.ac.uk</a><br>
+      <a href="https://clanfear.github.io">clanfear.github.io</a><br>
+      <a href="https://twitter.com/cclanfear">@cclanfear</a><br>
+      <a href="https://github.com/clanfear/">clanfear</a><br>
+      </td>
+      <td>
+      <i class="fas fa-envelope"></i><br>
+      <i class="fas fa-globe"></i><br>
+      <i class="fab fa-twitter"></i><br>
+      <i class="fab fa-github"></i>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="pull-left-20">
+&nbsp;
+</div>
+<div class="pull-right-80">
+<div style='font-size: 1.2em'>Charles Lanfear</div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Appointments*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'appointments') %>% 
+  mutate(what = str_c(what, ", ", where, ", ", year_begin, "–", year_end)) |>
+  # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
+  mutate(margin = ifelse(row_number() ==1, "Appointments", " ")) |>
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Education*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'education') %>% 
+  mutate(what = str_c(what, ", ", where, ", ", year_begin)) |>
+  select(what) %>% 
+  kable(format = "html", escape=FALSE) 
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Publications*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+publications_table <- publications %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_c("9",year),year)) %>%
+  arrange(desc(year), authors) %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_remove(year, "^9"),year)) %>%
+  mutate(author_year = str_c(authors, ". ", year, ". ")) %>%
+  mutate(title = ifelse(!is.na(url), str_c("<a href='",url,"'>",title, "</a>"), title)) %>% #turn title into link
+  mutate(citation = case_when(
+    type == "article" ~ str_c(author_year, title, ". ","*", venue,"* ", ifelse(!is.na(issue), issue, "")),
+    type == "report" ~ str_c(author_year, title, ". ","*", venue, "*"),
+    type == "prep" ~ str_c(authors, ". ", title, ". ", ifelse(!is.na(venue), str_c("*",venue,"*"), "")),
+    TRUE ~  str_c(authors, ". ", title, ". ", "*", venue,"*"))) 
+
+publications_table %>%
+  filter(type == "article") %>% 
+  transmute(margin = ifelse(row_number() ==1, "Publications", " "),
+            citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  select(citation) %>%
+  knitr::kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Reports*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r}
+publications_table %>%
+  filter(type == "report") %>% 
+  transmute(citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  select(citation) %>%
+  knitr::kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Presentations*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'talk') %>% 
+  # mutate(what = str_c("*", what, "*")) %>%
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, " (", additional_info, ")"), what)) %>%
+  mutate(what = str_c(what, ". ", "*", str_replace(where, ",", "*,"))) %>% 
+  arrange(desc(date)) %>%
+  mutate(what = str_c(what, ", ", format(date, format = "%b %e, %Y"))) %>%
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Courses*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'teaching') %>% 
+  mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
+  mutate(what = ifelse(!is.na(additional_info), 
+    str_c(what,", ", where, " - ", additional_info),
+    str_c(what, ", ", where))) %>% 
+  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin))) %>% 
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Awards*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'grants_and_awards') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin))) %>%
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Service*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'service') %>% 
+  mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
+  mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
+  mutate(what = str_c(what, ", ", where)) %>%
+  mutate(year = case_when( 
+           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, "---", year_end),
+           is.na(year_end) & !is.na(year_begin) ~ year_begin,
+           !is.na(year_end) & is.na(year_begin) ~ year_end,
+           TRUE ~ "ERROR"
+           )) %>% 
+  arrange(desc(year)) |>
+  mutate(what = str_c(what, ", ", ifelse(is.na(year_begin), year_end, year_begin))) %>%
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Media*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'media') %>%
+  arrange(desc(date)) %>%
+  mutate(what = ifelse(!is.na(url), str_c("[", what, ".](", url, ")"), what)) %>% #turn title into link
+  mutate(date = format(date, format = "%b %e, %Y")) %>%
+  mutate(citation = str_c(what, " *", where, "*", ", ", date)) %>%
+  select(citation) %>% 
+  kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Reviews*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'reviewer') %>%
+  select(what) %>% 
+  arrange(what) %>%
+  kable()
+```
+  </div>
+</div>
