@@ -155,6 +155,7 @@ cv_entries %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c(what,", ", where, " - ", additional_info),
     str_c(what, ", ", where))) %>% 
+  arrange(desc(year_begin)) |>
   mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin))) %>% 
   select(what) %>% 
   kable(format = "html", escape=FALSE)
