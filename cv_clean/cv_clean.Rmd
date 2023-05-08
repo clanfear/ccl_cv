@@ -32,7 +32,7 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
       <td>
       <a href="https://www.crim.cam.ac.uk/">Institute of Criminology</a><br>
       <a href="https://www.cam.ac.uk/">University of Cambridge</a><br>
-      Cambridge CB3 1AD<br>
+      Cambridge CB3 9DA<br>
       United Kingdom
       </td>
       <td>
