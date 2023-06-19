@@ -230,3 +230,17 @@ cv_entries %>%
 ```
   </div>
 </div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Supervision*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE}
+cv_entries %>% 
+  filter(type == 'supervision') %>%
+  arrange(desc(year_end), what) %>%
+  mutate(what = str_c(what, ", ", where, ", *", additional_info, "*, ", year_end)) |>
+  select(what) |>
+  kable()
+```
+  </div>
+</div>
