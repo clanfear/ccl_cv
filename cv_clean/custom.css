@@ -1,13 +1,13 @@
 :root {
   --background: whitesmoke;
-  --pagedjs-width: 6in;
-  --pagedjs-height: 9in;
+  --pagedjs-width: 8.3in;
+  --pagedjs-height: 11.7in;
   --color-paper: white;
   --color-mbox: rgba(0, 0, 0, 0.2);
   --running-title-width: 2.5in;
   --screen-pages-spacing: 5mm;
-  --pagedjs-margin-right: 0.5in !important;
-  --pagedjs-margin-left: 0.5in !important;
+  --pagedjs-margin-right: 0.75in !important;
+  --pagedjs-margin-left: 0.75in !important;
 }
 
 .float-container {
@@ -23,7 +23,7 @@
 .header-float {
   float: right;
   width: 60%;
-  font-size: 0.75em;
+  font-size: 1em;
 }
 .header-float ~ * {
   clear: both;
@@ -55,11 +55,11 @@ a:hover, a:active {
 }
 
 h1 {
-  font-size: 1.2em;
+  font-size: 1.4em;
 }
 body {
   hyphens: auto;
-  font-size: 0.875em;
+  font-size: 1em;
 }
 table {
   width: 100%;
@@ -226,7 +226,7 @@ code {
 }
 
 /* when a row can hold two pages, start first page on the right */
-@media screen and (min-width: 12.32in) {
+@media screen and (min-width: 17in) {
   .pagedjs_page {
     margin: auto 0 var(--screen-pages-spacing) 0;
   }
