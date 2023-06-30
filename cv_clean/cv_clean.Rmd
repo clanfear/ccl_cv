@@ -179,6 +179,9 @@ cv_entries %>%
   </div>
 </div>
 
+
+
+<div class="page-break">
 <div class="float-container">
   <div class="pull-left-20"><table><tr><td>*Service*</td></tr></table></div>
   <div class="pull-right-80">
@@ -198,6 +201,21 @@ cv_entries %>%
   mutate(what = str_c(what, ", ", ifelse(is.na(year_begin), year_end, year_begin))) %>%
   select(what) %>% 
   kable(format = "html", escape=FALSE)
+```
+  </div>
+</div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20"><table><tr><td>*Affiliations*</td></tr></table></div>
+  <div class="pull-right-80">
+```{r, eval= TRUE }
+cv_entries %>% 
+  filter(type == 'affiliation') %>%
+  arrange(desc(year_end), what) %>%
+  mutate(what = str_c(what, ", ", where)) |>
+  select(what) |>
+  kable()
 ```
   </div>
 </div>
@@ -231,10 +249,11 @@ cv_entries %>%
   </div>
 </div>
 
+
 <div class="float-container">
   <div class="pull-left-20"><table><tr><td>*Supervision*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE}
+```{r, eval= TRUE }
 cv_entries %>% 
   filter(type == 'supervision') %>%
   arrange(desc(year_end), what) %>%
