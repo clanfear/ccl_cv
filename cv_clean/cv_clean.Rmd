@@ -180,8 +180,6 @@ cv_entries %>%
 </div>
 
 
-
-<div class="page-break">
 <div class="float-container">
   <div class="pull-left-20"><table><tr><td>*Service*</td></tr></table></div>
   <div class="pull-right-80">
@@ -203,7 +201,6 @@ cv_entries %>%
   kable(format = "html", escape=FALSE)
 ```
   </div>
-</div>
 </div>
 
 <div class="float-container">
