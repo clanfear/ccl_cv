@@ -69,6 +69,7 @@ cv_entries %>%
   # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   mutate(margin = ifelse(row_number() ==1, "Appointments", " ")) |>
   select(what) %>% 
+  mutate(what = str_replace(what, "–", "&#8288;–&#8288;")) |>
   kable(format = "html", escape=FALSE)
 ```
   </div>
@@ -156,7 +157,7 @@ cv_entries %>%
     str_c(what,", ", where, " - ", additional_info),
     str_c(what, ", ", where))) %>% 
   arrange(desc(year_begin)) |>
-  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin))) %>% 
+  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "&#8288;–&#8288;", year_end), year_begin))) %>% 
   select(what) %>% 
   kable(format = "html", escape=FALSE)
 ```
@@ -172,7 +173,7 @@ cv_entries %>%
   arrange(desc(year_begin)) %>%
   filter(type == 'grants_and_awards') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
-  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "---", year_end), year_begin))) %>%
+  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "&#8288;–&#8288;", year_end), year_begin))) %>%
   select(what) %>% 
   kable(format = "html", escape=FALSE)
 ```
@@ -190,7 +191,7 @@ cv_entries %>%
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = str_c(what, ", ", where)) %>%
   mutate(year = case_when( 
-           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, "---", year_end),
+           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, "&#8288;–&#8288;", year_end),
            is.na(year_end) & !is.na(year_begin) ~ year_begin,
            !is.na(year_end) & is.na(year_begin) ~ year_end,
            TRUE ~ "ERROR"
