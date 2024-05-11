@@ -137,7 +137,7 @@ cv_entries %>%
   filter(type == 'talk') %>% 
   # mutate(what = str_c("*", what, "*")) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, " (", additional_info, ")"), what)) %>%
-  mutate(what = str_c(what, ". ", "*", str_replace(where, ",", "*,"))) %>% 
+  mutate(what = str_c(what, ". ", where)) %>% 
   arrange(desc(date)) %>%
   mutate(what = str_c(what, ", ", format(date, format = "%b %e, %Y"))) %>%
   select(what) %>% 
