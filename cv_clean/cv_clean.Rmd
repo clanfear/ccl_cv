@@ -65,7 +65,7 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
   filter(type == 'appointments') %>% 
-  mutate(what = str_c(what, ", ", where, ", ", year_begin, "–", year_end)) |>
+  mutate(what = str_c(what, ", ", where, "<br>", year_begin, "–", year_end)) |>
   # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   mutate(margin = ifelse(row_number() ==1, "Appointments", " ")) |>
   select(what) %>% 
@@ -110,6 +110,8 @@ publications_table %>%
   transmute(margin = ifelse(row_number() ==1, "Publications", " "),
             citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
   select(citation) %>%
+  # Hacky fix for missing text where table breaks for pagination
+  mutate(citation = ifelse(str_detect(citation, "Annual Review of Criminology"), str_c(citation, "<br>&nbsp;"), citation)) |>
   knitr::kable(format = "html", escape=FALSE)
 ```
   </div>
