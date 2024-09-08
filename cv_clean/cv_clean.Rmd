@@ -111,7 +111,7 @@ publications_table %>%
             citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
   select(citation) %>%
   # Hacky fix for missing text where table breaks for pagination
-  mutate(citation = ifelse(str_detect(citation, "Annual Review of Criminology"), str_c(citation, "<br>&nbsp;"), citation)) |>
+  mutate(citation = ifelse(str_detect(citation, "Environment International"), str_c(citation, "<br>&nbsp;"), citation)) |>
   knitr::kable(format = "html", escape=FALSE)
 ```
   </div>
