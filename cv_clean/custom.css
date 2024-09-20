@@ -243,15 +243,7 @@ code {
   }
 }
 
-/* when a row can hold two pages, start first page on the right */
-@media screen and (min-width: 17in) {
-  .pagedjs_page {
-    margin: auto 0 var(--screen-pages-spacing) 0;
-  }
-  .pagedjs_first_page {
-    margin-left: var(--pagedjs-width);
-  }
-}
+
 
 /* use a fixed width body for mobiles */
 @media screen and (max-width:1180px)  {
