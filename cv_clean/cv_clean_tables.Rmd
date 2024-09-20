@@ -59,25 +59,35 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Appointments</div>
+  <div class="pull-left-20"><table><tr><td>*Appointments*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
   filter(type == 'appointments') %>% 
   mutate(what = str_c(what, ", ", where, "<br>", year_begin, "–", year_end)) |>
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  # mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
+  mutate(margin = ifelse(row_number() ==1, "Appointments", " ")) |>
+  select(what) %>% 
+  mutate(what = str_replace(what, "–", "&#8288;–&#8288;")) |>
+  kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Education</div>
+  <div class="pull-left-20"><table><tr><td>*Education*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'education') %>% 
+  mutate(what = str_c(what, ", ", where, ", ", year_begin)) |>
+  select(what) %>% 
+  kable(format = "html", escape=FALSE) 
+```
+
+```{r, eval= FALSE, results = "asis"}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
   filter(type == 'education') %>% 
@@ -85,14 +95,37 @@ cv_entries %>%
   pull(what) %>%
   str_c("<p>", ., "</p>\n") %>% 
   str_c(collapse = "") %>%
-  cat()
+  str_c("<table><tr><td>", ., "</td></tr></table>") |> cat()
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Publications</div>
+  <div class="pull-left-20"><table><tr><td>*Publications*</td></tr></table></div>
   <div class="pull-right-80">
+```{r, eval= TRUE}
+publications_table <- publications %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_c("9",year),year)) %>%
+  arrange(desc(year), authors) %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_remove(year, "^9"),year)) %>%
+  mutate(author_year = str_c(authors, ". ", year, ". ")) %>%
+  mutate(title = ifelse(!is.na(url), str_c("<a href='",url,"'>",title, "</a>"), title)) %>% #turn title into link
+  mutate(citation = case_when(
+    type == "article" ~ str_c(author_year, title, ". ","*", venue,"* ", ifelse(!is.na(issue), issue, "")),
+    type == "report" ~ str_c(author_year, title, ". ","*", venue, "*"),
+    type == "prep" ~ str_c(authors, ". ", title, ". ", ifelse(!is.na(venue), str_c("*",venue,"*"), "")),
+    TRUE ~  str_c(authors, ". ", title, ". ", "*", venue,"*"))) 
+
+publications_table %>%
+  filter(type == "article") %>% 
+  transmute(margin = ifelse(row_number() ==1, "Publications", " "),
+            citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  select(citation) %>%
+  # Hacky fix for missing text where table breaks for pagination
+  #mutate(citation = ifelse(str_detect(citation, "Environment International"), str_c(citation, "<br>&nbsp;"), citation)) |>
+  knitr::kable(format = "html", escape=FALSE)
+```
+
 ```{r, eval= TRUE, results = "asis"}
 publications_table <- publications %>%
   mutate(year = ifelse(str_detect(year, "Forthcoming"), str_c("9",year),year)) %>%
@@ -108,53 +141,51 @@ publications_table <- publications %>%
 
 publications_table %>%
   filter(type == "article") %>% 
-  transmute(what = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
-  pull(what) %>%
+  transmute(margin = ifelse(row_number() ==1, "Publications", " "),
+            citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  pull(citation) %>%
   str_c("<p>", ., "</p>\n") %>% 
   str_c(collapse = "") %>%
-  cat()
+  str_c("<table><tr><td>", ., "</td></tr></table>") |> cat()
 ```
   </div>
 </div>
 
+
 <div class="float-container">
-  <div class="pull-left-20">Reports</div>
+  <div class="pull-left-20"><table><tr><td>*Reports*</td></tr></table></div>
   <div class="pull-right-80">
-```{r results = "asis"}
+```{r}
 publications_table %>%
   filter(type == "report") %>% 
-  transmute(what = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  transmute(citation = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  select(citation) %>%
+  knitr::kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Presentations</div>
+  <div class="pull-left-20"><table><tr><td>*Presentations*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'talk') %>% 
-  mutate(what = ifelse(!is.na(url), str_c("<a href='",url,"'>",what, "</a>"), what)) |> #turn title into link
+  # mutate(what = str_c("*", what, "*")) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, " (", additional_info, ")"), what)) %>%
   mutate(what = str_c(what, ". ", where)) %>% 
   arrange(desc(date)) %>%
   mutate(what = str_c(what, ", ", format(date, format = "%b %e, %Y"))) %>%
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Courses</div>
+  <div class="pull-left-20"><table><tr><td>*Courses*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'teaching') %>% 
   mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
@@ -163,37 +194,33 @@ cv_entries %>%
     str_c(what, ", ", where))) %>% 
   arrange(desc(year_begin)) |>
   mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "&#8288;–&#8288;", year_end), year_begin))) %>% 
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 
 <div class="float-container">
-  <div class="pull-left-20">Awards</div>
+  <div class="pull-left-20"><table><tr><td>*Awards*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   arrange(desc(year_begin)) %>%
   filter(type == 'grants_and_awards') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
   mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "&#8288;–&#8288;", year_end), year_begin))) %>%
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 
 <div class="float-container">
-  <div class="pull-left-20">Service</div>
+  <div class="pull-left-20"><table><tr><td>*Service*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'service') %>% 
   mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
@@ -206,77 +233,67 @@ cv_entries %>%
            TRUE ~ "ERROR"
            )) %>% 
   arrange(desc(year)) |>
-  mutate(what = str_c(what, ", ", year)) %>%
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  mutate(what = str_c(what, ", ", ifelse(is.na(year_begin), year_end, year_begin))) %>%
+  select(what) %>% 
+  kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Affiliations</div>
+  <div class="pull-left-20"><table><tr><td>*Affiliations*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE }
 cv_entries %>% 
   filter(type == 'affiliation') %>%
   arrange(desc(year_end), what) %>%
   mutate(what = str_c(what, ", ", where)) |>
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  select(what) |>
+  kable()
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Media</div>
+  <div class="pull-left-20"><table><tr><td>*Media*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'media') %>%
   arrange(desc(date)) %>%
   mutate(what = ifelse(!is.na(url), str_c("[", what, ".](", url, ")"), what)) %>% #turn title into link
   mutate(date = format(date, format = "%b %e, %Y")) %>%
-  mutate(what = str_c(what, " *", where, "*", ", ", date)) %>%
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  mutate(citation = str_c(what, " *", where, "*", ", ", date)) %>%
+  select(citation) %>% 
+  kable(format = "html", escape=FALSE)
 ```
   </div>
 </div>
 
 <div class="float-container">
-  <div class="pull-left-20">Reviews</div>
+  <div class="pull-left-20"><table><tr><td>*Reviews*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE}
 cv_entries %>% 
   filter(type == 'reviewer') %>%
+  select(what) %>% 
   arrange(what) %>%
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  kable()
 ```
   </div>
 </div>
 
 
 <div class="float-container">
-  <div class="pull-left-20">Supervision</div>
+  <div class="pull-left-20"><table><tr><td>*Supervision*</td></tr></table></div>
   <div class="pull-right-80">
-```{r, eval= TRUE, results = "asis"}
+```{r, eval= TRUE }
 cv_entries %>% 
-  filter(type == 'supervision' & additional_info == "PhD") %>%
+  filter(type == 'supervision') %>%
   arrange(desc(year_end), what) %>%
   mutate(what = str_c(what, ", ", additional_info, ", ", where, ", ", year_end)) |>
-  pull(what) %>%
-  str_c("<p>", ., "</p>\n") |> 
-  str_c(collapse = "") |>
-  cat()
+  select(what) |>
+  kable()
 ```
   </div>
 </div>

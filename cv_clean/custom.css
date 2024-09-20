@@ -8,7 +8,11 @@
   --screen-pages-spacing: 5mm;
   --pagedjs-margin-right: 0.75in !important;
   --pagedjs-margin-left: 0.75in !important;
+  --pagedjs-margin-top: 0.75in !important;
+  --pagedjs-margin-bottom: 0.75in !important;
 }
+
+
 
 .page-break{
   break-before: page;
@@ -42,11 +46,20 @@
 .pull-right-80 ~ * {
   clear: both;
 }
+.pull-right-80 p {
+  text-indent: -20px;
+  padding-left: 20px; 
+  margin-top: 5px;
+  margin-bottom: 5px;
+  break-inside: avoid;
+}
 .pull-left-20 {
   float: left;
   width: 20%;
   color: #880808;
   font-style: italic;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 a {
   color: #880808;
@@ -69,7 +82,8 @@ table {
   width: 100%;
   table-layout: fixed;
   border-spacing: none;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   border-top: none;
   border-bottom: none;
 }
@@ -200,7 +214,7 @@ pre.numberSource {
   border: none;
 }
 .footnote-break {
-  width: 1in;
+  width: 0.75in;
 }
 
 code {
