@@ -1,4 +1,0 @@
-```{block type="col-6 grid-item", echo=TRUE}
-## Personal Summary {.summary}
-I am a Postdoctoral Researcher at the Centre for Social Investigation and a Research Fellow of Nuffield College in the University of Oxford. I conduct theory-driven research on the ways communities respond to crime and the consequences of those responses using methods from demography, computational social science, and causal inference.
-```
