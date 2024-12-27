@@ -38,13 +38,13 @@ cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
       <td>
       <a href="mailto:cclanfear@gmail.com" class="email">cl948@cam.ac.uk</a><br>
       <a href="https://clanfear.github.io">clanfear.github.io</a><br>
-      <a href="https://twitter.com/cclanfear">@cclanfear</a><br>
+      <a href="https://bsky.app/profile/clanfear.bsky.social">@clanfear.bsky.social</a><br>
       <a href="https://github.com/clanfear/">clanfear</a><br>
       </td>
       <td>
       <i class="fas fa-envelope"></i><br>
       <i class="fas fa-globe"></i><br>
-      <i class="fab fa-twitter"></i><br>
+      <i class="fa-brands fa-bluesky"></i><br>
       <i class="fab fa-github"></i>
       </td>
     </tr>
