@@ -185,13 +185,14 @@ abbr {
 }
 
 @media screen {
-  div.sourceCode {
-    overflow: visible !important;
-  }
-  a.sourceLine::before {
-    text-decoration: unset !important;
-  }
-}
+   div.sourceCode {
+     overflow: visible !important;
+   }
+   a.sourceLine::before {
+     text-decoration: unset !important;
+   }
+} 
+
 pre.numberSource a.sourceLine {
   left: 0 !important;
   text-indent: -5em
@@ -246,8 +247,8 @@ code {
 
 
 /* use a fixed width body for mobiles */
-@media screen and (max-width:1180px)  {
+/* @media screen and (max-width:1180px)  {
   body {
     width: calc(var(--pagedjs-width) + 2 * var(--screen-pages-spacing));
   }
-}
+}*/
