@@ -60,6 +60,7 @@
   font-style: italic;
   margin-top: 5px;
   margin-bottom: 5px;
+  break-inside: avoid;
 }
 a {
   color: #880808;
