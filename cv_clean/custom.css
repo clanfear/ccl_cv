@@ -13,7 +13,6 @@
 }
 
 
-
 .page-break{
   break-before: page;
 }
@@ -22,6 +21,8 @@
   padding: 5px;
   float: left;
   width: 100%;
+  display: block;
+  float-reference: column;
 }
 .float-container::after {
   content: "";
@@ -29,9 +30,11 @@
   display: table;
 }
 .header-float {
+  float-reference: column;
   float: right;
   width: 60%;
   font-size: 1em;
+  display: block;
 }
 .header-float ~ * {
   clear: both;
@@ -41,7 +44,9 @@
 }
 .pull-right-80 {
   float: right;
+  float-reference: column;
   width: 80%;
+  display: block;
 }
 .pull-right-80 ~ * {
   clear: both;
@@ -52,15 +57,19 @@
   margin-top: 5px;
   margin-bottom: 5px;
   break-inside: avoid;
+  float-reference: column;
+  display: block;
 }
 .pull-left-20 {
   float: left;
   width: 20%;
+  float-reference: column;
   color: #880808;
   font-style: italic;
   margin-top: 5px;
   margin-bottom: 5px;
   break-inside: avoid;
+  display: block;
 }
 a {
   color: #880808;

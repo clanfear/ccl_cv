@@ -1,0 +1,276 @@
+/* Paged.js viewer */
+:root {
+  --pagedjs-width: 8.3in;
+  --pagedjs-height: 11.7in;
+  --color-background: whitesmoke;
+  --color-pageSheet: #cfcfcf;
+  --color-pageBox: violet;
+  --color-paper: white;
+  --color-marginBox: transparent;
+  --pagedjs-crop-color: black;
+  --pagedjs-crop-shadow: white;
+  --pagedjs-crop-stroke: 1px;
+  --pagedjs-margin-right: 0.75in !important;
+  --pagedjs-margin-left: 0.75in !important;
+  --pagedjs-margin-top: 0.75in !important;
+  --pagedjs-margin-bottom: 0.75in !important;
+  --screen-pages-spacing: 5mm;
+}
+
+@page{
+  size: 8.3in 11.7in; /* var(--pagedjs-width) doesn't work in browser when printing */
+  margin-top: var(--pagedjs-margin-top);
+  margin-right: var(--pagedjs-margin-right);
+  margin-bottom: var(--pagedjs-margin-bottom);
+  margin-left: var(--pagedjs-margin-left);
+}
+
+@page :blank {
+
+}
+
+/* To define how the book look on the screen: */
+@media screen, pagedjs-ignore {
+    body {
+        background-color: var(--color-background);
+        margin: var(--screen-pages-spacing) auto 0 auto;
+    }
+
+    .pagedjs_pages {
+        display: flex;
+        width: calc(var(--pagedjs-width) * 2);
+        flex: 0;
+        flex-wrap: wrap;
+        margin: 0 auto;
+    }
+
+    .pagedjs_page {
+        background-color: var(--color-paper);
+        box-shadow: 0 0 0 1px var(--color-pageSheet);
+        margin: 0;
+        flex-shrink: 0;
+        flex-grow: 0;
+        margin: auto auto var(--screen-pages-spacing) auto;
+    }
+/* margin-left: var(--pagedjs-width); */
+    .pagedjs_first_page {
+        margin-left: 0;
+    }
+
+    .pagedjs_page:last-of-type {
+        margin-bottom: 10mm;
+    }
+
+    .pagedjs_pagebox{
+        box-shadow: 0 0 0 1px var(--color-pageBox);
+    }
+
+    .pagedjs_left_page{
+        z-index: 20;
+        width: calc(var(--pagedjs-bleed-left) + var(--pagedjs-pagebox-width))!important;
+    }
+
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-crop {
+        border-color: transparent;
+    }
+    
+    .pagedjs_left_page .pagedjs_bleed-right .pagedjs_marks-middle{
+        width: 0;
+    } 
+
+    .pagedjs_right_page{
+        z-index: 10;
+        position: relative;
+        left: calc(var(--pagedjs-bleed-left)*-1);
+    }
+
+    /* show the margin-box */
+
+    .pagedjs_margin-top-left-corner-holder,
+    .pagedjs_margin-top,
+    .pagedjs_margin-top-left,
+    .pagedjs_margin-top-center,
+    .pagedjs_margin-top-right,
+    .pagedjs_margin-top-right-corner-holder,
+    .pagedjs_margin-bottom-left-corner-holder,
+    .pagedjs_margin-bottom,
+    .pagedjs_margin-bottom-left,
+    .pagedjs_margin-bottom-center,
+    .pagedjs_margin-bottom-right,
+    .pagedjs_margin-bottom-right-corner-holder,
+    .pagedjs_margin-right,
+    .pagedjs_margin-right-top,
+    .pagedjs_margin-right-middle,
+    .pagedjs_margin-right-bottom,
+    .pagedjs_margin-left,
+    .pagedjs_margin-left-top,
+    .pagedjs_margin-left-middle,
+    .pagedjs_margin-left-bottom {
+        box-shadow: 0 0 0 1px inset var(--color-marginBox);
+    }
+}
+
+@media screen and (max-width:1180px)  {
+  body {
+    width: calc(var(--pagedjs-width) + 2 * var(--screen-pages-spacing));
+  }
+}
+
+
+
+.row {
+  display: flex;
+}
+
+.column-left {
+  flex: 20%;
+}
+.column-right {
+  flex: 80%;
+}
+
+.page-break{
+  break-before: page;
+}
+
+.section-title {
+  position: absolute;
+  color: #880808;
+  font-style: italic;
+}
+.indent {
+  
+}
+
+
+.container {
+ position: relative;
+ margin-top: 20px;
+ margin-bottom: 20px;
+}
+
+p {
+  text-indent: -20px;
+  padding-left: 145px; 
+  break-inside: avoid;
+}
+
+.float-container {
+  padding: 5px;
+  float: left;
+  width: 100%;
+}
+.float-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.header-float {
+  float: right;
+  width: 60%;
+  font-size: 1em;
+}
+.header-float ~ * {
+  clear: both;
+}
+.pull-right-60 ~ * {
+  clear: both;
+}
+.pull-right-80 {
+  float: right;
+  width: 80%;
+}
+.pull-right-80 ~ * {
+  clear: both;
+}
+.pull-right-80 p {
+  text-indent: -20px;
+  padding-left: 20px; 
+  margin-top: 5px;
+  margin-bottom: 5px;
+  break-inside: avoid;
+}
+.pull-left-20 {
+  float: left;
+  width: 20%;
+  color: #880808;
+  font-style: italic;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  break-inside: avoid;
+}
+a {
+  color: #880808;
+}
+a:link, a:visited {
+  text-decoration: none;
+}
+a:hover, a:active {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 1.4em;
+}
+body {
+  hyphens: auto;
+  font-size: 1em;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-top: none;
+  border-bottom: none;
+}
+
+html {
+  line-height: 1.3;
+}
+
+thead, th {
+  display: none;
+}
+
+p {
+  margin-bottom: 5px;
+}
+
+table td {
+  text-align: left;
+  vertical-align: top;
+  padding-left: 20px;
+  text-indent: -20px;
+}
+
+
+.header-float table td {
+  padding-left: none;
+  text-indent: none;
+  text-align: right;
+}
+.header-float table td:nth-child(3) {
+  width: 5%;
+}
+.header-float table td:nth-child(2) {
+  width: 45%;
+  text-align: right;
+}
+.header-float table td:nth-child(1) {
+  width: 50%;
+}
+
+
+@import 'https://fonts.googleapis.com/css?family=Crimson+Text';
+
+body {
+  font-family: 'Crimson Text', Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, 'source-han-serif-sc', 'Source Han Serif SC', 'Source Han Serif CN', 'Source Han Serif TC', 'Source Han Serif TW', 'Source Han Serif', 'Songti SC', 'Microsoft YaHei', serif;
+}
+blockquote {
+  font-family: 'Crimson Text', Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, 'STKaiti', 'KaiTi', '楷体', 'SimKai', 'DFKai-SB', 'NSimSun', serif;
+}
+code {
+  font-family: Consolas, Courier, "Courier New", 'STKaiti', 'KaiTi', 'SimKai', monospace;
+}

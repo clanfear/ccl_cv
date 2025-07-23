@@ -1,0 +1,272 @@
+---
+css: ["@pages"]
+js: ["@pages"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(dplyr)
+library(stringr)
+library(knitr)
+library(lubridate)
+fileConn <- file("./faheader.html")
+writeLines('<script src="https://kit.fontawesome.com/a63d56dbfb.js" crossorigin="anonymous"></script>', fileConn)
+close(fileConn)
+publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
+cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
+```
+
+<div class="header-float">
+  <table>
+    <tr>
+      <td>
+      <a href="https://www.crim.cam.ac.uk/">Institute of Criminology</a><br>
+      <a href="https://www.cam.ac.uk/">University of Cambridge</a><br>
+      Cambridge CB3 9DA<br>
+      United Kingdom
+      </td>
+      <td>
+      <a href="mailto:cclanfear@gmail.com" class="email">cl948@cam.ac.uk</a><br>
+      <a href="https://clanfear.github.io">clanfear.github.io</a><br>
+      <a href="https://bsky.app/profile/clanfear.bsky.social">@clanfear.bsky.social</a><br>
+      <a href="https://github.com/clanfear/">clanfear</a><br>
+      </td>
+      <td>
+      <i class="fas fa-envelope"></i><br>
+      <i class="fas fa-globe"></i><br>
+      <i class="fa-brands fa-bluesky"></i><br>
+      <i class="fab fa-github"></i>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="pull-left-20">
+&nbsp;
+</div>
+<div class="pull-right-80">
+<div style='font-size: 1.2em'>Charles Lanfear</div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Appointments</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'appointments') %>% 
+  mutate(what = str_c(what, ", ", where, "<br>", year_begin, "–", year_end)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Education</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'education') %>% 
+  mutate(what = str_c(what, ", ", where, ", ", year_begin)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") %>% 
+  str_c(collapse = "") %>%
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Publications</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+publications_table <- publications %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_c("9",year),year)) %>%
+  arrange(desc(year), authors) %>%
+  mutate(year = ifelse(str_detect(year, "Forthcoming"), str_remove(year, "^9"),year)) %>%
+  mutate(author_year = str_c(authors, ". ", year, ". ")) %>%
+  mutate(title = ifelse(!is.na(url), str_c("<a href='",url,"'>",title, "</a>"), title)) %>% #turn title into link
+  mutate(citation = case_when(
+    type == "article" ~ str_c(author_year, title, ". ","*", venue,"* ", ifelse(!is.na(issue), issue, "")),
+    type == "report" ~ str_c(author_year, title, ". ","*", venue, "*"),
+    type == "prep" ~ str_c(authors, ". ", title, ". ", ifelse(!is.na(venue), str_c("*",venue,"*"), "")),
+    TRUE ~  str_c(authors, ". ", title, ". ", "*", venue,"*"))) 
+
+publications_table %>%
+  filter(type == "article") %>% 
+  transmute(what = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") %>% 
+  str_c(collapse = "") %>%
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Reports</div>
+  <div class="pull-right-80">
+```{r results = "asis"}
+publications_table %>%
+  filter(type == "report") %>% 
+  transmute(what = str_replace(citation, "CC Lanfear", "**CC Lanfear**")) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Presentations</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'talk') %>% 
+  mutate(what = ifelse(!is.na(url), str_c("<a href='",url,"'>",what, "</a>"), what)) |> #turn title into link
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, " (", additional_info, ")"), what)) %>%
+  mutate(what = str_c(what, ". ", where)) %>% 
+  arrange(desc(date)) %>%
+  mutate(what = str_c(what, ", ", format(date, format = "%b %e, %Y"))) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Courses</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'teaching') %>% 
+  mutate(what = ifelse(!is.na(url), str_c("[", what, "](", url, ")"), what)) %>%
+  mutate(what = ifelse(!is.na(additional_info), 
+    str_c(what,", ", where, " - ", additional_info),
+    str_c(what, ", ", where))) %>% 
+  arrange(desc(year_begin)) |>
+  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "&#8288;–&#8288;", year_end), year_begin))) %>% 
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+
+<div class="float-container">
+  <div class="pull-left-20">Awards</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'grants_and_awards') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  mutate(what = str_c(what, ", ", ifelse(!is.na(year_end), str_c(year_begin, "&#8288;–&#8288;", year_end), year_begin))) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+
+<div class="float-container">
+  <div class="pull-left-20">Service</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'service') %>% 
+  mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
+  mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
+  mutate(what = str_c(what, ", ", where)) %>%
+  mutate(year = case_when( 
+           !is.na(year_end) & !is.na(year_begin) ~ str_c(year_begin, "&#8288;–&#8288;", year_end),
+           is.na(year_end) & !is.na(year_begin) ~ year_begin,
+           !is.na(year_end) & is.na(year_begin) ~ year_end,
+           TRUE ~ "ERROR"
+           )) %>% 
+  arrange(desc(year)) |>
+  mutate(what = str_c(what, ", ", year)) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Affiliations</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'affiliation') %>%
+  arrange(desc(year_end), what) %>%
+  mutate(what = str_c(what, ", ", where)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Media</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'media') %>%
+  arrange(desc(date)) %>%
+  mutate(what = ifelse(!is.na(url), str_c("[", what, ".](", url, ")"), what)) %>% #turn title into link
+  mutate(date = format(date, format = "%b %e, %Y")) %>%
+  mutate(what = str_c(what, " *", where, "*", ", ", date)) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="pull-left-20">Reviews</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'reviewer') %>%
+  arrange(what) %>%
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+
+<div class="float-container">
+  <div class="pull-left-20">Supervision</div>
+  <div class="pull-right-80">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  filter(type == 'supervision' & additional_info == "PhD") %>%
+  arrange(desc(year_end), what) %>%
+  mutate(what = str_c(what, ", ", additional_info, ", ", where, ", ", year_end)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
