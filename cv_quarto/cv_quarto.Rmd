@@ -95,7 +95,7 @@ cv_entries %>%
 ```{r, eval= TRUE, results = "asis"}
 publications_table <- publications %>%
   mutate(year = ifelse(str_detect(year, "Forthcoming"), str_c("9",year),year)) %>%
-  arrange(desc(year), authors) %>%
+  arrange(desc(year), desc(row_number())) %>%
   mutate(year = ifelse(str_detect(year, "Forthcoming"), str_remove(year, "^9"),year)) %>%
   mutate(author_year = str_c(authors, ". ", year, ". ")) %>%
   mutate(title = ifelse(!is.na(url), str_c("<a href='",url,"'>",title, "</a>"), title)) %>% #turn title into link
