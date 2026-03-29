@@ -1,0 +1,118 @@
+---
+format: 
+  html:
+    include-in-header: 
+      - file: "./faheader.html"
+      - text: |
+          <script src="paged.polyfill.js"></script>
+      - text: |
+          <link rel="stylesheet" type="text/css" href="custom.css">
+    page-layout: custom
+    embed-resources: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(dplyr)
+library(stringr)
+library(knitr)
+library(lubridate)
+fileConn <- file()
+writeLines('<script src="https://kit.fontawesome.com/a63d56dbfb.js" crossorigin="anonymous"></script>', fileConn)
+close(fileConn)
+publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
+cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
+```
+
+<div class="header-float">
+  <table>
+    <tr>
+      <td>
+      <a href="https://www.crim.cam.ac.uk/">Institute of Criminology</a><br>
+      <a href="https://www.cam.ac.uk/">University of Cambridge</a><br>
+      Cambridge CB3 9DA<br>
+      United Kingdom
+      </td>
+      <td>
+      <a href="mailto:cclanfear@gmail.com" class="email">cl948@cam.ac.uk</a><br>
+      <a href="https://clanfear.github.io">clanfear.github.io</a><br>
+      <a href="https://bsky.app/profile/clanfear.bsky.social">@clanfear.bsky.social</a><br>
+      <a href="https://github.com/clanfear/">clanfear</a><br>
+      </td>
+      <td>
+      <i class="fas fa-envelope"></i><br>
+      <i class="fas fa-globe"></i><br>
+      <i class="fa-brands fa-bluesky"></i><br>
+      <i class="fab fa-github"></i>
+      </td>
+    </tr>
+  </table>
+</div>
+
+&nbsp;
+
+<div class="container">
+<div class="indent" style='font-size: 1.2em'>
+Charles Lanfear
+</div>
+</div>
+
+<div class="container">
+<div class="section-title">Appointments</div>
+<div class="indent">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'appointments') %>% 
+  mutate(what = str_c(what, ", ", where, "<br>", year_begin, "–", year_end)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+
+<div class="container">
+<div class="section-title">Education</div>
+<div class="indent">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'education') %>% 
+  mutate(what = str_c(what, ", ", where, ", ", year_begin)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") %>% 
+  str_c(collapse = "") %>%
+  cat()
+```
+  </div>
+</div>
+
+
+<div class="container">
+<div class="section-title">Affiliations</div>
+<div class="indent">
+```{r, eval= TRUE, results = "asis"}
+cv_entries %>% 
+  arrange(desc(year_begin)) %>%
+  filter(type == 'affiliation') %>% 
+  mutate(what = str_c(what, ", ", where, "<br>", year_begin, "–", year_end)) |>
+  pull(what) %>%
+  str_c("<p>", ., "</p>\n") |> 
+  str_c(collapse = "") |>
+  cat()
+```
+  </div>
+</div>
+
+<div class="container">
+<div class="section-title">Biography</div>
+<div class="noindent">
+
+Charles Lanfear is an Associate Professor and Director of the MPhil in Criminology at the Institute of Criminology in the University of Cambridge and a member of the Project in Human Development in Chicago Neighborhoods. He conducts theory-driven research on how crime, victimization, and social control are related to large-scale changes in communities and society as a whole using methods from econometrics, epidemiology, and demography. This research has been published in outlets including *Criminology*, *Science Advances*, *JAMA Network Open*, and *Annual Review of Criminology*. Dr Lanfear is also a committed advocate for an open science and a founding member of the European Society for Open Criminology.
+
+  </div>
+</div>
+
